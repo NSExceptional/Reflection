@@ -15,6 +15,9 @@ public func set<T>(_ value: Any, key: String, for instance: inout T) throws {
 }
 
 private func property(type: Any.Type, key: String) throws -> Property.Description {
-    guard let property = try properties(type).first(where: { $0.key == key }) else { throw ReflectionError.instanceHasNoKey(type: type, key: key) }
+    guard let property = try properties(type).first(where: { $0.key == key }) else {
+        throw ReflectionError.instanceHasNoKey(type: type, key: key)
+    }
+    
     return property
 }

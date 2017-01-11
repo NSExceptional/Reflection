@@ -3,6 +3,7 @@ protocol NominalType : MetadataType {
 }
 
 extension NominalType {
+    /// Descriptor is offset by `1` apparently
     var nominalTypeDescriptor: NominalTypeDescriptor {
         let pointer = UnsafePointer<Int>(self.pointer)
         let base = pointer.advanced(by: nominalTypeDescriptorOffsetLocation)

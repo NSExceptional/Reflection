@@ -21,7 +21,7 @@ struct NominalTypeDescriptor : PointerType {
     typealias FieldsTypeAccessor = @convention(c) (UnsafePointer<Int>) -> UnsafePointer<UnsafePointer<Int>>
 
     var fieldTypesAccessor: FieldsTypeAccessor? {
-        let offset = pointer.pointee.fieldTypesAccessor
+        let offset = self.pointer.pointee.fieldTypesAccessor
         guard offset != 0 else { return nil }
         let p = UnsafePointer<Int32>(self.pointer)
         let offsetPointer: UnsafePointer<Int> = relativePointer(base: p.advanced(by: 4), offset: offset)

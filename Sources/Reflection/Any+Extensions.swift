@@ -35,8 +35,12 @@ extension AnyExtensions {
     
 }
 
+
+/// Sets the underlying type of `Extensions` to the given type,
+/// as to make any type temporarily conform to AnyExtensions.
+/// Probably not thread-safe
 func extensions(of type: Any.Type) -> AnyExtensions.Type {
-    struct Extensions : AnyExtensions {}
+    struct Extensions: AnyExtensions {}
     var extensions: AnyExtensions.Type = Extensions.self
     withUnsafePointer(to: &extensions) { pointer in
         UnsafeMutableRawPointer(mutating: pointer).assumingMemoryBound(to: Any.Type.self).pointee = type
@@ -44,8 +48,10 @@ func extensions(of type: Any.Type) -> AnyExtensions.Type {
     return extensions
 }
 
+/// Creates a temporary instance of `Extensions` and changes its type to the given type,
+/// as to make any instance of any type temporarily conform to AnyExtensions.
 func extensions(of value: Any) -> AnyExtensions {
-    struct Extensions : AnyExtensions {}
+    struct Extensions: AnyExtensions {}
     var extensions: AnyExtensions = Extensions()
     withUnsafePointer(to: &extensions) { pointer in
         UnsafeMutableRawPointer(mutating: pointer).assumingMemoryBound(to: Any.self).pointee = value
