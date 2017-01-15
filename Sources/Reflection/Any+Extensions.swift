@@ -6,6 +6,7 @@
 //
 //
 
+/// Any type can conform to this protocol via `extensions(of:)`
 protocol AnyExtensions {}
 
 extension AnyExtensions {
@@ -36,10 +37,12 @@ extension AnyExtensions {
 }
 
 
-/// Sets the underlying type of `Extensions` to the given type,
-/// as to make any type temporarily conform to AnyExtensions.
-/// Probably not thread-safe
+/// Make use of the `AnyExtensions` methods given any type.
 func extensions(of type: Any.Type) -> AnyExtensions.Type {
+    /// Sets the underlying type of `Extensions` to the given type,
+    /// as to make any type temporarily conform to AnyExtensions.
+    
+    // Must be declared in this scope to be thread-safe
     struct Extensions: AnyExtensions {}
     var extensions: AnyExtensions.Type = Extensions.self
     withUnsafePointer(to: &extensions) { pointer in
@@ -48,9 +51,12 @@ func extensions(of type: Any.Type) -> AnyExtensions.Type {
     return extensions
 }
 
-/// Creates a temporary instance of `Extensions` and changes its type to the given type,
-/// as to make any instance of any type temporarily conform to AnyExtensions.
+/// Make use of the `AnyExtensions` methods given any value.
 func extensions(of value: Any) -> AnyExtensions {
+    /// Creates a temporary instance of `Extensions` and changes its type to the given type,
+    /// as to make any instance of any type temporarily conform to AnyExtensions.
+    
+    // Must be declared in this scope to be thread-safe
     struct Extensions: AnyExtensions {}
     var extensions: AnyExtensions = Extensions()
     withUnsafePointer(to: &extensions) { pointer in
